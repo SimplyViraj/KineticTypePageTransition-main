@@ -1,4 +1,14 @@
 /* globals gsap, ScrollTrigger, MotionPathPlugin */ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+if (typeof gsap.quickTo !== 'function') gsap.quickTo = function(target, prop, opts = {}) {
+    let tween;
+    return function(value) {
+        if (tween) tween.kill();
+        const toVars = Object.assign({}, opts);
+        toVars[prop] = value;
+        toVars.overwrite = true;
+        tween = gsap.to(target, toVars);
+    };
+};
 const init = ()=>{
     const paths = document.querySelectorAll('.motion-paths *');
     if (!paths.length) return;
