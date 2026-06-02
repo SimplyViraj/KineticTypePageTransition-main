@@ -729,6 +729,19 @@ const init = ()=>{
         duration: 1.3,
         ease: 'expo'
     });
+    const syncPan = (snap = false)=>{
+        const x = -(0, _gsap.gsap).getProperty('.focal-point', 'x');
+        const y = -(0, _gsap.gsap).getProperty('.focal-point', 'y');
+        if (snap) {
+            (0, _gsap.gsap).set('.pov-pan', {
+                x,
+                y
+            });
+            return;
+        }
+        xTo(x);
+        yTo(y);
+    };
     (0, _gsap.gsap).timeline({
         scrollTrigger: {
             scroller: 'main',
@@ -736,12 +749,14 @@ const init = ()=>{
             endTrigger: '#s6',
             start: '0 0',
             end: '100% 100%',
-            scrub: 1
+            scrub: 1,
+            onUpdate: (self)=>{
+                const atEdge = self.progress <= 0.001 || self.progress >= 0.999;
+                syncPan(atEdge);
+            },
+            onScrubComplete: ()=>syncPan(true)
         },
-        onUpdate: ()=>{
-            xTo(-(0, _gsap.gsap).getProperty('.focal-point', 'x'));
-            yTo(-(0, _gsap.gsap).getProperty('.focal-point', 'y'));
-        },
+        onUpdate: ()=>syncPan(false),
         defaults: {
             duration: 1,
             ease: 'none'
@@ -793,10 +808,7 @@ const init = ()=>{
         scale: 3,
         ease: 'sine.inOut'
     }, 4);
-    (0, _gsap.gsap).set('.pov-pan', {
-        x: -(0, _gsap.gsap).getProperty('.focal-point', 'x'),
-        y: -(0, _gsap.gsap).getProperty('.focal-point', 'y')
-    });
+    syncPan(true);
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {
     once: true
