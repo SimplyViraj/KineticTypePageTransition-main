@@ -36,7 +36,6 @@ html, body {
 
 main {
   z-index: 1;
-  -webkit-overflow-scrolling: touch;
   scroll-snap-type: y mandatory;
   overscroll-behavior: none;
   width: 100vw;
@@ -52,38 +51,5 @@ section {
   position: relative;
   top: 0;
   left: 0;
-}
-
-@media (width <= 768px) {
-  .fixed-bg svg {
-    border-radius: 1.5vh;
-    width: 90%;
-    height: 84%;
-    top: 8%;
-    left: 5%;
-  }
-
-  .pov-scale, .pov-pan {
-    transform-origin: center;
-  }
-
-  section {
-    min-height: 90vh;
-    padding: 30vh 2rem 4rem;
-  }
-}
-
-@media (width <= 420px) {
-  .fixed-bg svg {
-    border-radius: 1vh;
-    width: 96%;
-    height: 88%;
-    top: 6%;
-    left: 2%;
-  }
-
-  section {
-    padding: 28vh 1.25rem 3rem;
-  }
 }
 /*# sourceMappingURL=KineticTypePageTransition-main.d046a61c.css.map */
