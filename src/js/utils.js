@@ -1,15 +1,11 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+/* globals gsap, ScrollTrigger, MotionPathPlugin */
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const init = () => {
-  const paths = document.querySelectorAll('.motion-paths path');
+  const paths = document.querySelectorAll('.motion-paths *');
 
-  if (!paths.length) {
-    return;
-  }
+  if (!paths.length) return;
 
   const xTo = gsap.quickTo('.pov-pan', 'x', { duration: 1.3, ease: 'expo' });
   const yTo = gsap.quickTo('.pov-pan', 'y', { duration: 1.3, ease: 'expo' });
