@@ -40,6 +40,7 @@ main {
   width: 100vw;
   height: 100vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   scroll-snap-type: y mandatory;
   overscroll-behavior: none;
 }
@@ -51,4 +52,39 @@ section {
   top: 0;
   width: 100%;
   min-height: 100vh;
+}
+
+/* Mobile-friendly tweaks */
+@media (max-width: 768px) {
+  .fixed-bg svg {
+    left: 5%;
+    top: 8%;
+    width: 90%;
+    height: 84%;
+    border-radius: 1.5vh;
+  }
+
+  .pov-scale,
+  .pov-pan {
+    transform-origin: center center;
+  }
+
+  section {
+    min-height: 90vh;
+    padding: 30vh 2rem 4rem 2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .fixed-bg svg {
+    left: 2%;
+    top: 6%;
+    width: 96%;
+    height: 88%;
+    border-radius: 1vh;
+  }
+
+  section {
+    padding: 28vh 1.25rem 3rem 1.25rem;
+  }
 }

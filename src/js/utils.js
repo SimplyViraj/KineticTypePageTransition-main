@@ -14,15 +14,22 @@ const init = () => {
   const xTo = gsap.quickTo('.pov-pan', 'x', { duration: 1.3, ease: 'expo' });
   const yTo = gsap.quickTo('.pov-pan', 'y', { duration: 1.3, ease: 'expo' });
 
+  // Use the document/window as scroller on touch devices for native scrolling
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  const scrollerEl = isTouch ? window : document.querySelector('main');
+
+  const stConfig = {
+    trigger: '#s1',
+    endTrigger: '#s6',
+    start: '0 0',
+    end: '100% 100%',
+    scrub: 1,
+  };
+
+  if (scrollerEl && scrollerEl !== window) stConfig.scroller = scrollerEl;
+
   gsap.timeline({
-    scrollTrigger: {
-      scroller: 'main',
-      trigger: '#s1',
-      endTrigger: '#s6',
-      start: '0 0',
-      end: '100% 100%',
-      scrub: 1,
-    },
+    scrollTrigger: stConfig,
     onUpdate: () => {
       xTo(-gsap.getProperty('.focal-point', 'x'));
       yTo(-gsap.getProperty('.focal-point', 'y'));

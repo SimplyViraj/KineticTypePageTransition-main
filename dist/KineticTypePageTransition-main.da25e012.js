@@ -729,15 +729,19 @@ const init = ()=>{
         duration: 1.3,
         ease: 'expo'
     });
+    // Use the document/window as scroller on touch devices for native scrolling
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const scrollerEl = isTouch ? window : document.querySelector('main');
+    const stConfig = {
+        trigger: '#s1',
+        endTrigger: '#s6',
+        start: '0 0',
+        end: '100% 100%',
+        scrub: 1
+    };
+    if (scrollerEl && scrollerEl !== window) stConfig.scroller = scrollerEl;
     (0, _gsap.gsap).timeline({
-        scrollTrigger: {
-            scroller: 'main',
-            trigger: '#s1',
-            endTrigger: '#s6',
-            start: '0 0',
-            end: '100% 100%',
-            scrub: 1
-        },
+        scrollTrigger: stConfig,
         onUpdate: ()=>{
             xTo(-(0, _gsap.gsap).getProperty('.focal-point', 'x'));
             yTo(-(0, _gsap.gsap).getProperty('.focal-point', 'y'));
