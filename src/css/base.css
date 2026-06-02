@@ -1,0 +1,54 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Open Sans", sans-serif;
+  background: #000;
+}
+
+.fixed-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: #000;
+  inset: 0;
+  z-index: 0;
+}
+
+.fixed-bg svg {
+  position: absolute;
+  top: 5%;
+  left: 25%;
+  width: 50%;
+  height: 90%;
+  border-radius: 2.5vh;
+}
+@media (max-aspect-ratio: 1.5) {
+  .fixed-bg svg {
+    left: 9%;
+    width: 82%;
+  }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: none;
+}
+
+section {
+  scroll-snap-align: center;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+}
