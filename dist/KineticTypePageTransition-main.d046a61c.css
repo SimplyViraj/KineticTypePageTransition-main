@@ -36,8 +36,9 @@ html, body {
 
 main {
   z-index: 1;
+  -webkit-overflow-scrolling: touch;
   scroll-snap-type: y mandatory;
-  overscroll-behavior: none;
+  overscroll-behavior-y: contain;
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -46,6 +47,7 @@ main {
 
 section {
   scroll-snap-align: center;
+  scroll-snap-stop: always;
   width: 100%;
   min-height: 100vh;
   position: relative;
