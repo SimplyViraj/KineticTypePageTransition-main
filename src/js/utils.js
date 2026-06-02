@@ -11,20 +11,11 @@ const init = () => {
     return;
   }
 
-  const xTo = gsap.quickTo('.pov-pan', 'x', { duration: 1.3, ease: 'expo' });
-  const yTo = gsap.quickTo('.pov-pan', 'y', { duration: 1.3, ease: 'expo' });
-
-  const syncPan = (snap = false) => {
+  const syncPan = () => {
     const x = -gsap.getProperty('.focal-point', 'x');
     const y = -gsap.getProperty('.focal-point', 'y');
 
-    if (snap) {
-      gsap.set('.pov-pan', { x, y });
-      return;
-    }
-
-    xTo(x);
-    yTo(y);
+    gsap.set('.pov-pan', { x, y });
   };
 
   gsap.timeline({
@@ -35,13 +26,10 @@ const init = () => {
       start: '0 0',
       end: '100% 100%',
       scrub: 1,
-      onUpdate: (self) => {
-        const atEdge = self.progress <= 0.001 || self.progress >= 0.999;
-        syncPan(atEdge);
-      },
-      onScrubComplete: () => syncPan(true),
+      onUpdate: syncPan,
+      onRefresh: syncPan,
     },
-    onUpdate: () => syncPan(false),
+    onUpdate: syncPan,
     defaults: { duration: 1, ease: 'none' },
   })
     .to('.focal-point', { motionPath: { path: paths[0] }, immediateRender: true }, 0)
@@ -59,7 +47,7 @@ const init = () => {
     .to('.focal-point', { motionPath: { path: paths[4] } }, 4)
     .to('.pov-scale', { rotate: -5, scale: 3, ease: 'sine.inOut' }, 4);
 
-  syncPan(true);
+  syncPan();
 };
 
 if (document.readyState === 'loading') {

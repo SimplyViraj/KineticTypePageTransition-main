@@ -721,26 +721,13 @@ var _motionPathPlugin = require("gsap/MotionPathPlugin");
 const init = ()=>{
     const paths = document.querySelectorAll('.motion-paths path');
     if (!paths.length) return;
-    const xTo = (0, _gsap.gsap).quickTo('.pov-pan', 'x', {
-        duration: 1.3,
-        ease: 'expo'
-    });
-    const yTo = (0, _gsap.gsap).quickTo('.pov-pan', 'y', {
-        duration: 1.3,
-        ease: 'expo'
-    });
-    const syncPan = (snap = false)=>{
+    const syncPan = ()=>{
         const x = -(0, _gsap.gsap).getProperty('.focal-point', 'x');
         const y = -(0, _gsap.gsap).getProperty('.focal-point', 'y');
-        if (snap) {
-            (0, _gsap.gsap).set('.pov-pan', {
-                x,
-                y
-            });
-            return;
-        }
-        xTo(x);
-        yTo(y);
+        (0, _gsap.gsap).set('.pov-pan', {
+            x,
+            y
+        });
     };
     (0, _gsap.gsap).timeline({
         scrollTrigger: {
@@ -750,13 +737,10 @@ const init = ()=>{
             start: '0 0',
             end: '100% 100%',
             scrub: 1,
-            onUpdate: (self)=>{
-                const atEdge = self.progress <= 0.001 || self.progress >= 0.999;
-                syncPan(atEdge);
-            },
-            onScrubComplete: ()=>syncPan(true)
+            onUpdate: syncPan,
+            onRefresh: syncPan
         },
-        onUpdate: ()=>syncPan(false),
+        onUpdate: syncPan,
         defaults: {
             duration: 1,
             ease: 'none'
@@ -808,7 +792,7 @@ const init = ()=>{
         scale: 3,
         ease: 'sine.inOut'
     }, 4);
-    syncPan(true);
+    syncPan();
 };
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {
     once: true
