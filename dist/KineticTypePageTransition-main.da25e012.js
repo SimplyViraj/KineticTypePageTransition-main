@@ -719,9 +719,8 @@ var _scrollTrigger = require("gsap/ScrollTrigger");
 var _motionPathPlugin = require("gsap/MotionPathPlugin");
 (0, _gsap.gsap).registerPlugin((0, _scrollTrigger.ScrollTrigger), (0, _motionPathPlugin.MotionPathPlugin));
 const init = ()=>{
-    const scroller = document.querySelector('main');
     const paths = document.querySelectorAll('.motion-paths path');
-    if (!scroller || !paths.length) return;
+    if (!paths.length) return;
     const syncPan = ()=>{
         const x = -(0, _gsap.gsap).getProperty('.focal-point', 'x');
         const y = -(0, _gsap.gsap).getProperty('.focal-point', 'y');
@@ -732,13 +731,12 @@ const init = ()=>{
     };
     (0, _gsap.gsap).timeline({
         scrollTrigger: {
-            scroller,
+            scroller: 'main',
             trigger: '#s1',
             endTrigger: '#s6',
             start: '0 0',
             end: '100% 100%',
             scrub: 1,
-            invalidateOnRefresh: true,
             onUpdate: syncPan,
             onRefresh: syncPan
         },
@@ -796,9 +794,10 @@ const init = ()=>{
     }, 4);
     syncPan();
 };
-window.addEventListener('load', init, {
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {
     once: true
 });
+else init();
 
 },{"gsap":"9F7Z6","gsap/ScrollTrigger":"372oo","gsap/MotionPathPlugin":"c4OwT"}],"9F7Z6":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

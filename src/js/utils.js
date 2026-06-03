@@ -5,10 +5,9 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const init = () => {
-  const scroller = document.querySelector('main');
   const paths = document.querySelectorAll('.motion-paths path');
 
-  if (!scroller || !paths.length) {
+  if (!paths.length) {
     return;
   }
 
@@ -21,13 +20,12 @@ const init = () => {
 
   gsap.timeline({
     scrollTrigger: {
-      scroller,
+      scroller: 'main',
       trigger: '#s1',
       endTrigger: '#s6',
       start: '0 0',
       end: '100% 100%',
       scrub: 1,
-      invalidateOnRefresh: true,
       onUpdate: syncPan,
       onRefresh: syncPan,
     },
@@ -52,4 +50,8 @@ const init = () => {
   syncPan();
 };
 
-window.addEventListener('load', init, { once: true });
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+  init();
+}
